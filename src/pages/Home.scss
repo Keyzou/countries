@@ -1,0 +1,114 @@
+@import 'styles/styles.scss';
+h1.head {
+  background: $gray-900;
+  color: $gray-600;
+  margin: 0;
+  position: relative;
+  z-index: 3;
+  padding: 0.5rem;
+}
+
+.app {
+  display: flex;
+  height: 100%;
+  min-height: calc(75vh + 50px);
+}
+
+.result-container {
+  width: 30%;
+  position: relative;
+  z-index: 999;
+  background: $gray-200;
+  padding: 1rem;
+}
+
+.map-container {
+  width: 70%;
+}
+.map-control {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+  position: relative;
+}
+
+.rounded {
+  border-radius: 999rem !important;
+  width: 2rem;
+  padding: 0;
+  height: 2rem;
+
+  svg {
+    vertical-align: 0rem !important;
+  }
+}
+
+.mc {
+  background: rgba($gray-900, 0.5);
+  padding: 0.5rem;
+  border-radius: 2rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.map {
+  position: absolute;
+  top: 50px;
+}
+
+#mapContainer * {
+  user-select: none;
+}
+
+.indicatorSelection {
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+  background: $gray-900;
+  color: $gray-400;
+  height: 25%;
+  z-index: 1;
+}
+
+.indicator-options {
+  h3 {
+    text-align: center;
+  }
+}
+
+.ranking {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  svg {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rank {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .country-name {
+      font-weight: bold;
+    }
+
+    .value {
+      font-size: 1.4rem;
+      font-weight: 300;
+    }
+
+    &-best {
+      color: $success;
+    }
+
+    &-worst {
+      color: $danger;
+    }
+  }
+}

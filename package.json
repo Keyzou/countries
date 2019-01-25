@@ -1,16 +1,44 @@
 {
+  "homepage": "http://keyzou.github.io/countries",
   "name": "cloud",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.12",
+    "@fortawesome/free-solid-svg-icons": "^5.6.3",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.1.3",
+    "chart.js": "^2.7.3",
+    "deep-equal": "^1.0.1",
+    "node-sass": "^4.11.0",
     "react": "^16.6.3",
+    "react-chartkick": "^0.3.0",
     "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1"
+    "react-number-format": "^4.0.6",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.1",
+    "react-select": "^2.3.0",
+    "react-simple-maps": "^0.12.1",
+    "react-tippy": "^1.2.3",
+    "reactstrap": "^6.5.0"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.11.1",
+    "gh-pages": "^2.0.1",
+    "prettier": "1.15.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

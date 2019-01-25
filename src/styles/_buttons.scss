@@ -1,0 +1,79 @@
+@import '~bootstrap/scss/variables';
+
+.btn {
+  border: 1px solid $gray-800;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  &:hover {
+    background: $gray-300;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+  &.btn-primary {
+    border: 1px solid darken($primary, 10%);
+    color: mix(white, $primary, 90%);
+    background: linear-gradient(
+      saturate(lighten($primary, 10%), 20%),
+      saturate(darken($primary, 3%), 0%)
+    );
+    &:hover &:not(:disabled) {
+      background: linear-gradient(
+        saturate(darken($primary, 0%), 0%),
+        saturate(darken($primary, 7%), 0%)
+      );
+    }
+  }
+  &.btn-success {
+    border: 1px solid darken($success, 5%);
+    color: mix(white, $success, 90%);
+    background: linear-gradient(
+      saturate(lighten($success, 10%), 0%),
+      saturate(darken($success, 0%), 0%)
+    );
+    &:hover &:not(:disabled) {
+      background: linear-gradient(
+        saturate(lighten($success, 3%), 0%),
+        saturate(darken($success, 5%), 0%)
+      );
+    }
+  }
+  &.btn-danger {
+    border: 1px solid darken($danger, 10%);
+    color: mix(white, $danger, 90%);
+    background: linear-gradient(
+      saturate(lighten($danger, 10%), 20%),
+      saturate(darken($danger, 3%), 0%)
+    );
+    &:hover &:not(:disabled) {
+      background: linear-gradient(
+        saturate(darken($danger, 0%), 0%),
+        saturate(darken($danger, 7%), 0%)
+      );
+    }
+  }
+  &.btn-warning {
+    border: 1px solid darken($warning, 15%);
+    color: mix(white, $warning, 90%);
+    background: linear-gradient(
+      saturate(lighten($warning, 0%), 10%),
+      saturate(darken($warning, 10%), 10%)
+    );
+    &:hover &:not(:disabled) {
+      color: mix(white, $warning, 90%);
+      border: 1px solid darken($warning, 15%);
+      background: linear-gradient(
+        saturate(darken($warning, 7%), 10%),
+        saturate(darken($warning, 15%), 10%)
+      );
+    }
+  }
+  &.btn-info {
+    border: 1px solid darken($info, 10%);
+    color: mix(white, $info, 90%);
+    background: linear-gradient(saturate(lighten($info, 10%), 0%), saturate(darken($info, 0%), 0%));
+    &:hover &:not(:disabled) {
+      background: linear-gradient(saturate(darken($info, 0%), 0%), saturate(darken($info, 7%), 0%));
+    }
+  }
+}
