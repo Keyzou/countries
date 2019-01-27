@@ -63,16 +63,16 @@ export default class Home extends Component {
       zoom: 1,
       yearsSelect,
     };
-    axios.get('https://51.38.36.193:1323/indicators/list').then(r => {
+    axios.get('http://localhost:1323/indicators/list').then(r => {
       ind = r.data;
-      axios.get('https://51.38.36.193:1323/countries').then(r2 => {
+      axios.get('http://localhost:1323/countries').then(r2 => {
         const cm = {};
         const cn = {};
         r2.data.forEach(c => {
           cm[c.country_code] = c.income_group;
           cn[c.country_code] = c.country_name;
         });
-        axios.get('https://51.38.36.193:1323/regions').then(r3 => {
+        axios.get('http://localhost:1323/regions').then(r3 => {
           const regions = [];
           r3.data.forEach((v, i) => {
             if (v === '') return;
@@ -127,47 +127,45 @@ export default class Home extends Component {
 
   testDb(code) {
     const { selectedIndicator, selectIncomeGroups } = this.state;
-    axios
-      .get(`https://51.38.36.193:1323/indicators/${selectedIndicator}/${code}/values`)
-      .then(r => {
-        const values = {};
-        if (selectIncomeGroups) {
-          this.setState({
-            selectedCountry: r.data.regions.countries.income_group,
-          });
-          axios
-            .get(
-              `https://51.38.36.193:1323/indicators/${selectedIndicator}/incomeGroup/${
-                r.data.regions.countries.income_group
-              }/values`,
-            )
-            .then(r2 => {
-              const cvalues = [];
-
-              r2.data.forEach(v => {
-                const c = {};
-                v.regions.countries.values.forEach(value => {
-                  if (!value.indicator_value) return;
-                  c[value.year] = value.indicator_value;
-                });
-                cvalues.push({ name: v.regions.countries.country_name, data: c });
-              });
-              this.setState({
-                result: cvalues,
-              });
-            });
-          return;
-        }
-        r.data.regions.countries.values.forEach(v => {
-          if (!v.indicator_value) return;
-          values[v.year] = v.indicator_value;
-        });
+    axios.get(`http://localhost:1323/indicators/${selectedIndicator}/${code}/values`).then(r => {
+      const values = {};
+      if (selectIncomeGroups) {
         this.setState({
-          result: values,
+          selectedCountry: r.data.regions.countries.income_group,
         });
-      });
+        axios
+          .get(
+            `http://localhost:1323/indicators/${selectedIndicator}/incomeGroup/${
+              r.data.regions.countries.income_group
+            }/values`,
+          )
+          .then(r2 => {
+            const cvalues = [];
 
-    axios.get(`https://51.38.36.193:1323/indicators/${selectedIndicator}/worldAvg`).then(r => {
+            r2.data.forEach(v => {
+              const c = {};
+              v.regions.countries.values.forEach(value => {
+                if (!value.indicator_value) return;
+                c[value.year] = value.indicator_value;
+              });
+              cvalues.push({ name: v.regions.countries.country_name, data: c });
+            });
+            this.setState({
+              result: cvalues,
+            });
+          });
+        return;
+      }
+      r.data.regions.countries.values.forEach(v => {
+        if (!v.indicator_value) return;
+        values[v.year] = v.indicator_value;
+      });
+      this.setState({
+        result: values,
+      });
+    });
+
+    axios.get(`http://localhost:1323/indicators/${selectedIndicator}/worldAvg`).then(r => {
       const values = {};
       r.data.forEach(v => {
         if (v.value.nbPays === 0) return;
@@ -176,7 +174,7 @@ export default class Home extends Component {
       this.setState({ worldAvg: values });
     });
 
-    axios.get(`https://51.38.36.193:1323/indicators/${selectedIndicator}/source`).then(r => {
+    axios.get(`http://localhost:1323/indicators/${selectedIndicator}/source`).then(r => {
       this.setState({ indicatorSource: r.data });
       console.log(r.data);
     });
@@ -200,67 +198,65 @@ export default class Home extends Component {
   fetchBestWorst() {
     const { modalRegion, modalYear, indicators, countryNames } = this.state;
     if (!modalRegion || modalYear === 0) return;
-    axios
-      .get(`https://51.38.36.193:1323/indicators/bestworst/${modalRegion}/${modalYear}`)
-      .then(r => {
-        const result = [];
-        console.log(r.data.length);
-        r.data.forEach((v, index) => {
-          result.push(
-            <tr key={index}>
-              <td>{indicators.find(i => i.id === v['_id']).indicator_name}</td>
-              <td>
-                <Tooltip
-                  arrow
-                  html={
-                    <>
-                      <h6>{countryNames[v.value.max.code]}</h6>
-                      <span>
-                        <NumberFormat
-                          value={v.value.max.value}
-                          displayType="text"
-                          thousandSeparator
-                        />
-                      </span>
-                    </>
-                  }
-                >
-                  <Badge color="success">{v.value.max.code}</Badge>
-                </Tooltip>
-              </td>
-              <td>
-                <Tooltip
-                  arrow
-                  html={
-                    <>
-                      <h6>{countryNames[v.value.min.code]}</h6>
-                      <span>
-                        <NumberFormat
-                          value={v.value.min.value}
-                          displayType="text"
-                          thousandSeparator
-                        />
-                      </span>
-                    </>
-                  }
-                >
-                  <Badge color="danger">{v.value.min.code}</Badge>
-                </Tooltip>
-              </td>
-            </tr>,
-          );
-        });
-        this.setState({
-          bestWorstCountries: result,
-        });
+    axios.get(`http://localhost:1323/indicators/bestworst/${modalRegion}/${modalYear}`).then(r => {
+      const result = [];
+      console.log(r.data.length);
+      r.data.forEach((v, index) => {
+        result.push(
+          <tr key={index}>
+            <td>{indicators.find(i => i.id === v['_id']).indicator_name}</td>
+            <td>
+              <Tooltip
+                arrow
+                html={
+                  <>
+                    <h6>{countryNames[v.value.max.code]}</h6>
+                    <span>
+                      <NumberFormat
+                        value={v.value.max.value}
+                        displayType="text"
+                        thousandSeparator
+                      />
+                    </span>
+                  </>
+                }
+              >
+                <Badge color="success">{v.value.max.code}</Badge>
+              </Tooltip>
+            </td>
+            <td>
+              <Tooltip
+                arrow
+                html={
+                  <>
+                    <h6>{countryNames[v.value.min.code]}</h6>
+                    <span>
+                      <NumberFormat
+                        value={v.value.min.value}
+                        displayType="text"
+                        thousandSeparator
+                      />
+                    </span>
+                  </>
+                }
+              >
+                <Badge color="danger">{v.value.min.code}</Badge>
+              </Tooltip>
+            </td>
+          </tr>,
+        );
       });
+      this.setState({
+        bestWorstCountries: result,
+      });
+    });
   }
 
   updateIndicatorInfo(event) {
     const { selectedIndicator } = this.state;
     if (event.value === -1) return;
     axios
-      .get(`https://51.38.36.193:1323/indicators/${selectedIndicator}/bestworst/${event.value}`)
+      .get(`http://localhost:1323/indicators/${selectedIndicator}/bestworst/${event.value}`)
       .then(r => {
         const values = r.data;
         this.setState({
